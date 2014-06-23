@@ -17,10 +17,14 @@ SOURCES += \
     UI/mainWindow.cpp \
     svg.cpp \
     parser/svgParser.cpp \
-    render/svgRenderEngine.cpp
+    render/svgRenderEngine.cpp \
+    svgElement.cpp \
+    svgBaseElement.cpp
 
 HEADERS  += \
     UI/mainWindow.h \
     svg.h \
     parser/svgParser.h \
-    render/svgRenderEngine.h
+    render/svgRenderEngine.h \
+    svgElement.h \
+    svgBaseElement.h
