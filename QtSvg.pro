@@ -27,4 +27,5 @@ HEADERS  += \
     parser/svgParser.h \
     render/svgRenderEngine.h \
     svgElement.h \
-    svgBaseElement.h
+    svgBaseElement.h \
+    common.h

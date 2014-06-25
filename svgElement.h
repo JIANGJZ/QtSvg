@@ -1,24 +1,23 @@
 ﻿#ifndef SVG_ELEMENT_H
 #define SVG_ELEMENT_H
 #include "svg.h"
+#include "render/svgRenderEngine.h"
 
-//typedef in "svgElement.h"
-typedef SvgTransform svg_transform_t;
-typedef SvgStyle svg_style_t;
-typedef SvgElement svg_element_t;
+class Svg;
 
 class SvgTransform {
 private:
     double matrix[3][2];
 };
 
+
 class SvgStyle {
 private:
-    svg_t *doc;
+    Svg *doc;
 };
 
 
-typedef enum svg_element_type {
+enum svg_element_type {
     SVG_ELEMENT_TYPE_ROOT,
     SVG_ELEMENT_TYPE_GROUP,
     SVG_ELEMENT_TYPE_DEFS,
@@ -34,25 +33,27 @@ typedef enum svg_element_type {
     SVG_ELEMENT_TYPE_GRADIENT_STOP,
     SVG_ELEMENT_TYPE_PATTERN,
     SVG_ELEMENT_TYPE_IMAGE
-}svg_element_type_t;
+};
+typedef svg_element_type svg_element_type_t;
 
 
 class SvgElement {
 public:
-    svg_status_t svg_element_create(svg_element_t *&element, svg_element_type_t type, svg_element_t *parent, svg_t *doc);
-    svg_status_t svg_clone(svg_element_t *other);
+    svg_status_t svg_element_create(SvgElement *&element, svg_element_type type, SvgElement *parent, Svg *doc);
+    svg_status_t svg_clone(SvgElement *other);
     svg_status_t svg_element_destroy();
-    virtual svg_status_t svg_element_render(svg_render_engine_t *engine, void *closure);
+    virtual svg_status_t svg_element_render(SvgRenderEngine *engine, void *closure);
 private:
-    virtual svg_status_t _svg_element_init(svg_element_type_t type, svg_element_t *parent, svg_t *doc);
+    virtual svg_status_t _svg_element_init(svg_element_type_t type, SvgElement *parent, Svg *doc);
     virtual svg_status_t _svg_element_deinit();
-    virtual svg_status_t _svg_element_init_copy(svg_element_t *other);
-    svg_element_t *parent;
-    svg_t *doc;
-    svg_style_t style;
-    svg_transform_t transform;
+    virtual svg_status_t _svg_element_init_copy(SvgElement *other);
+    SvgElement *parent;
+    Svg *doc;
+    SvgStyle style;
+    SvgTransform transform;
     QString id;
     svg_element_type_t type;
 };
+typedef SvgElement svg_element_t;
 
 #endif // SVG_ELEMENT_H
