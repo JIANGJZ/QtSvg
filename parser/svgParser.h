@@ -16,6 +16,7 @@ private:
     void _svg_parser_sax_end_element(void *closure, const QString name);
     void _svg_parser_sax_character(void *closure, const QString ch, __uint32_t len);
 
+    svg_status_t _svg_parser_parse_anchor(const QString *attribute, svg_element_t *&anchor);
     svg_status_t _svg_parser_parse_svg(const QString *attribute, svg_element_t *&root_element);
     svg_status_t _svg_parser_parse_defs(const QString *attribute, svg_element_t *&defs_element);
     svg_status_t _svg_parser_parse_use(const QString *attribute, svg_element_t *&use_element);
@@ -53,6 +54,38 @@ private:
     }svg_parser_cb_t;
 
 
+    typedef struct svg_parser_state {
+        const svg_parser_cb_t *cb;
+        svg_element_t *group_element;
+        struct svg_parser_state *next;
+    }svg_parser_state_t;
+
+    typedef struct svg_parser_map {
+        char *name;
+        svg_parser_cb_t cb;
+    }svg_parser_map_t;
+
+    static const svg_parser_map_t SVG_PARSER_MAP[ ] = {
+        {"a",   {_svg_parser_parse_anchor, NULL}},
+        {"svg", {_svg_parser_parse_svg, NULL}},
+        {"defs", {_svg_parser_parse_defs, NULL}},
+        {"use", {_svg_parser_parse_use, NULL}},
+        {"symbol", {_svg_parser_parse_symbol, NULL}},
+        {"group", {_svg_parser_parse_group, NULL}},
+        {"path", {_svg_parser_parse_path, NULL}},
+        {"line", {_svg_parser_parse_line, NULL}},
+        {"rect", {_svg_parser_parse_rect, NULL}},
+        {"circle", {_svg_parser_parse_circle, NULL}},
+        {"ellipse", {_svg_parser_parse_ellipse, NULL}},
+        {"polygon", {_svg_parser_parse_polygon, NULL}},
+        {"polyline", {_svg_parser_parse_polyline, NULL}},
+        {"text", {_svg_parser_parse_text, _svg_parser_parse_text_characters}},
+        {"image", {_svg_parser_parse_image, NULL}},
+        {"linearGradient", {_svg_parser_parse_linear_gradient, NULL}},
+        {"radialGradient", {_svg_parser_parse_radial_gradient, NULL}},
+        {"stop", {_svg_parser_parse_gradient_stop, NULL}},
+        {"pattern", {_svg_parser_parse_pattern, NULL}}
+    };
 
 };
 
