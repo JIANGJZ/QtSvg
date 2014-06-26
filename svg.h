@@ -17,6 +17,22 @@ public:
     svg_status_t svg_create(Svg *&svg);
     svg_status_t svg_destroy(Svg *svg);
     svg_status_t svg_parse(const QString file_name);
+
+    inline QString svg_get_dir_name(){
+        return this->m_dir_name;
+    }
+
+    inline svg_status_t svg_set_dir_name(QString file_name){
+
+        if(file_name.isNull() == true){
+            return SVG_STATUS_INVALID_VALUE;
+        }
+        this->m_dir_name = file_name;
+
+        return SVG_STATUS_SUCCEES;
+
+    }
+
 private:
     svg_status_t _svg_parse_file(QFile *file);
     svg_status_t _svg_parse_buffer(const QString buf, size_t count);

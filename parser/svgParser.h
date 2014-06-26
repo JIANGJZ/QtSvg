@@ -1,15 +1,20 @@
 ﻿#ifndef SVGPARSER_H
 #define SVGPARSER_H
-#include <QString>
 #include "../svgElement.h"
 #include "../svg.h"
+
+#include <QString>
+#include <QFile>
 
 class Svg;
 
 class SvgParser {
 public:
-    svg_status_t svg_parser_init();
+    svg_status_t svg_parser_init(Svg *svg);
     svg_status_t svg_parser_deinit();
+
+    svg_status_t svg_parser_parse(Svg *svg, QString name);
+
     svg_status_t svg_parser_begin();
     svg_status_t svg_parser_parse_chunk();
     svg_status_t svg_parser_end();
@@ -34,6 +39,7 @@ private:
         svg_parser_cb_t cb;
     }svg_parser_map_t;
 
+    svg_status_t _svg_parser_parse_file(Svg *svg, QFile *file);
 
     void _svg_parser_sax_start_element(void *closure, const QString name, const QString attr);
     void _svg_parser_sax_end_element(void *closure, const QString name);
@@ -68,10 +74,15 @@ private:
     svg_status_t _svg_push_state(const svg_parser_cb_t *cb);
     svg_status_t _svg_pop_state();
 
+    void _svg_parser_sax_warning (const char *msg, ...);
+    void _svg_parser_sax_error(const char *msg, ...);
+    void _svg_parser_sax_fatal_error(const char *msg, ...);
+
     Svg *svg;
     __uint32_t unknow_element_depth;
     svg_status_t status;
     svg_parser_state_t *state;
+    QString currentText;
 
     static const svg_parser_map_t SVG_PARSER_MAP[];
 

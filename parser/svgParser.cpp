@@ -1,5 +1,49 @@
 ﻿#include "svgParser.h"
 
+#include <QString>
+#include <QFile>
+#include <stdarg.h>
+
+svg_status_t SvgParser::svg_parser_init(Svg *svg){
+    this->svg = svg;
+    this->unknow_element_depth = 0;
+    this->state = NULL;
+    this->status = SVG_STATUS_SUCCEES;
+
+    return this->status;
+}
+
+
+svg_status_t SvgParser::svg_parser_deinit(){
+    this->svg = NULL;
+    this->status = SVG_STATUS_SUCCEES;
+
+    return this->status;
+}
+
+svg_status_t SvgParser::svg_parser_parse(svg_t *svg, const QString filename){
+    svg_status_t status = SVG_STATUS_SUCCEES;
+    
+    (svg->svg_get_dir_name()).clear();
+    svg->svg_set_dir_name(filename);
+
+    QFile file(filename);
+    file.open(QIODevice::ReadOnly);
+    if(file.error() != QFileDevice::NoError){
+        return SVG_STATUS_IO_ERROR;
+    }
+    status = _svg_parser_parse_file(svg, &file);
+    file.close();
+
+    return status;
+}
+
+
+svg_status_t SvgParser::_svg_parser_parse_file(svg_t *svg, QFile *file){
+   svg_status_t status = SVG_STATUS_SUCCEES;
+    return status;
+}
+
 const SvgParser::svg_parser_map_t SvgParser::SVG_PARSER_MAP[ ] = {
     {"a",   {SvgParser::_svg_parser_parse_anchor, NULL}},
     {"svg", {SvgParser::_svg_parser_parse_svg, NULL}},
@@ -101,3 +145,24 @@ svg_status_t SvgParser::_svg_parser_parse_text_characters (const QString ch, __u
     return SVG_STATUS_SUCCEES;
 }
 
+
+void SvgParser::_svg_parser_sax_warning(const char *msg, ...){
+    va_list args;
+    va_start(args, msg);
+    vfprintf(stderr, msg, args);
+    va_end(args);
+}
+
+void SvgParser::_svg_parser_sax_error(const char *msg, ...){
+    va_list args;
+    va_start(args, msg);
+    vfprintf(stderr, msg, args);
+    va_end(args);
+}
+
+void SvgParser::_svg_parser_sax_fatal_error(const char *msg, ...){
+    va_list args;
+    va_start(args, msg);
+    vfprintf(stderr, msg, args);
+    va_end(args);
+}
