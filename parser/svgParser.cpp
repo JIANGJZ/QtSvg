@@ -1,8 +1,13 @@
 ﻿#include "svgParser.h"
+#include "common.h"
 
 #include <QString>
 #include <QFile>
 #include <stdarg.h>
+#include <zlib.h>
+#include <fcntl.h>
+#include <errno.h>
+#include <unistd.h>
 
 svg_status_t SvgParser::svg_parser_init(Svg *svg){
     this->svg = svg;
@@ -41,8 +46,61 @@ svg_status_t SvgParser::svg_parser_parse(svg_t *svg, const QString filename){
 
 svg_status_t SvgParser::_svg_parser_parse_file(svg_t *svg, QFile *file){
    svg_status_t status = SVG_STATUS_SUCCEES;
-    return status;
+   return status;
 }
+
+
+svg_status_t SvgParser::_svg_parser_begin(){
+    return this->status;
+}
+
+
+svg_status_t SvgParser::_svg_parser_parse_chunk(QString buf){
+
+}
+
+svg_status_t SvgParser::_svg_parser_end(){
+    return this->status;
+}
+
+
+void SvgParser::_svg_parser_sax_start_element(void *closure, const QString name, const QString attr){
+
+}
+
+
+void SvgParser::_svg_parser_sax_character(void *closure, const QString ch, __uint32_t len){
+
+}
+
+
+void SvgParser::_svg_parser_sax_end_element(void *closure, const QString name) {
+
+}
+
+svg_status_t SvgParser::_svg_push_state(const svg_parser_cb_t *cb){
+    return SVG_STATUS_SUCCEES;
+}
+
+svg_status_t SvgParser::_svg_push_state(const svg_parser_cb_t *cb){
+    return SVG_STATUS_SUCCEES;
+}
+
+
+svg_status_t SvgParser::_svg_parser_new_root_element(svg_element_t *&svg_root){
+    return SVG_STATUS_SUCCEES;
+}
+
+
+svg_status_t SvgParser::_svg_parser_new_group_element(svg_element_t *&group_element, svg_element_type_t type){
+    return SVG_STATUS_SUCCEES;
+}
+
+
+svg_status_t SvgParser::_svg_parser_new_leaf_element(svg_element_t *&child_element, svg_element_type_t type){
+    return SVG_STATUS_SUCCEES;
+}
+
 
 const SvgParser::svg_parser_map_t SvgParser::SVG_PARSER_MAP[ ] = {
     {"a",   {SvgParser::_svg_parser_parse_anchor, NULL}},

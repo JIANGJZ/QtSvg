@@ -15,9 +15,6 @@ public:
 
     svg_status_t svg_parser_parse(Svg *svg, QString name);
 
-    svg_status_t svg_parser_begin();
-    svg_status_t svg_parser_parse_chunk();
-    svg_status_t svg_parser_end();
 private:
 
     typedef svg_status_t (svg_parser_parse_element_t) (const QString *&attribute, svg_element_t *&element_ret);
@@ -40,6 +37,10 @@ private:
     }svg_parser_map_t;
 
     svg_status_t _svg_parser_parse_file(Svg *svg, QFile *file);
+
+    svg_status_t _svg_parser_begin();
+    svg_status_t _svg_parser_parse_chunk(QString buf);
+    svg_status_t _svg_parser_end();
 
     void _svg_parser_sax_start_element(void *closure, const QString name, const QString attr);
     void _svg_parser_sax_end_element(void *closure, const QString name);
