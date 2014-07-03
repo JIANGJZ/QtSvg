@@ -18,7 +18,7 @@ public:
 private:
 
     typedef svg_status_t (svg_parser_parse_element_t) (const QString *&attribute, svg_element_t *&element_ret);
-    typedef svg_status_t (svg_parser_parse_characters_t) (const QString ch, __uint32_t len);
+    typedef svg_status_t (svg_parser_parse_characters_t) (const QString ch, __int32_t len);
 
     typedef struct svg_parser_cb {
         svg_parser_parse_element_t *parse_element;
@@ -44,7 +44,7 @@ private:
 
     void _svg_parser_sax_start_element(void *closure, const QString name, const QString attr);
     void _svg_parser_sax_end_element(void *closure, const QString name);
-    void _svg_parser_sax_character(void *closure, const QString ch, __uint32_t len);
+    void _svg_parser_sax_character(void *closure, const QString ch, __int32_t len);
 
     static svg_status_t _svg_parser_parse_anchor(const QString *&attribute, svg_element_t *&anchor);
     static svg_status_t _svg_parser_parse_svg(const QString *&attribute, svg_element_t *&root_element);
@@ -65,7 +65,7 @@ private:
     static svg_status_t _svg_parser_parse_radial_gradient(const QString *&attribute, svg_element_t *&radial_gradient_element);
     static svg_status_t _svg_parser_parse_gradient_stop(const QString *&attribute, svg_element_t *&gradient_stop_element);
     static svg_status_t _svg_parser_parse_pattern(const QString *&attribute, svg_element_t *&pattern_element);
-    static svg_status_t _svg_parser_parse_text_characters (const QString ch, __uint32_t len);
+    static svg_status_t _svg_parser_parse_text_characters (const QString ch, __int32_t len);
 
 
     svg_status_t _svg_parser_new_root_element(svg_element_t *&svg_root);
@@ -80,7 +80,7 @@ private:
     void _svg_parser_sax_fatal_error(const char *msg, ...);
 
     Svg *svg;
-    __uint32_t unknow_element_depth;
+    __int32_t unknow_element_depth;
     svg_status_t status;
     svg_parser_state_t *state;
     QString currentText;

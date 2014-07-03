@@ -19,7 +19,8 @@ SOURCES += \
     parser/svgParser.cpp \
     render/svgRenderEngine.cpp \
     svgElement.cpp \
-    svgBaseElement.cpp
+    svgBaseElement.cpp \
+    svgHash.cpp
 
 HEADERS  += \
     UI/mainWindow.h \
@@ -28,4 +29,5 @@ HEADERS  += \
     render/svgRenderEngine.h \
     svgElement.h \
     svgBaseElement.h \
-    common.h
+    common.h \
+    svgHash.h

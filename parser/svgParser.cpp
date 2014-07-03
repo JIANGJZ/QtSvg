@@ -69,7 +69,7 @@ void SvgParser::_svg_parser_sax_start_element(void *closure, const QString name,
 }
 
 
-void SvgParser::_svg_parser_sax_character(void *closure, const QString ch, __uint32_t len){
+void SvgParser::_svg_parser_sax_character(void *closure, const QString ch, __int32_t len){
 
 }
 
@@ -82,7 +82,7 @@ svg_status_t SvgParser::_svg_push_state(const svg_parser_cb_t *cb){
     return SVG_STATUS_SUCCEES;
 }
 
-svg_status_t SvgParser::_svg_push_state(const svg_parser_cb_t *cb){
+svg_status_t SvgParser::_svg_pop_state(){
     return SVG_STATUS_SUCCEES;
 }
 
@@ -199,7 +199,7 @@ svg_status_t SvgParser::_svg_parser_parse_pattern(const QString *&attribute, svg
     return SVG_STATUS_SUCCEES;
 }
 
-svg_status_t SvgParser::_svg_parser_parse_text_characters (const QString ch, __uint32_t len){
+svg_status_t SvgParser::_svg_parser_parse_text_characters (const QString ch, __int32_t len){
     return SVG_STATUS_SUCCEES;
 }
 
